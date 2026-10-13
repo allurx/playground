@@ -1,0 +1,7 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+
+/tiny-bay/tiny-bay*
+  Content-Disposition: attachment; filename="tiny-bay.html"

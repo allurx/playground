@@ -1,0 +1,11 @@
+{
+    "$schema": "./node_modules/wrangler/config-schema.json",
+    "name": "playground",
+    "compatibility_date": "2026-10-08",
+    "workers_dev": false,
+    "preview_urls": false,
+    "routes": [{ "pattern": "play.allurx.io", "custom_domain": true }],
+    "assets": {
+        "directory": "./dist",
+    },
+}

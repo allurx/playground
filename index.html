@@ -1,0 +1,89 @@
+<!doctype html>
+<!-- Copyright (c) 2026 allurx -->
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="light dark" />
+        <meta
+            name="description"
+            content="Allurx 的创意游乐场。探索小小海湾，在互动风景里拨动海水、改变天气，保存属于此刻的照片。"
+        />
+        <title>Allurx Playground · 创意游乐场</title>
+        <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+        <link rel="stylesheet" href="./src/styles.css" />
+        <link rel="canonical" href="https://play.allurx.io/" />
+    </head>
+    <body>
+        <a class="skip-link" href="#main">跳到作品</a>
+        <header class="site-header shell">
+            <a class="brand" href="./" aria-label="Allurx Playground 首页">
+                <svg class="brand-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                    <rect x="3" y="3" width="11" height="11" rx="4" fill="currentColor" />
+                    <circle cx="23" cy="8.5" r="5.5" fill="#e89572" />
+                    <path d="m8.5 18 6.5 11H2Z" fill="#d0ae54" />
+                    <rect x="18" y="18" width="11" height="11" rx="3" fill="#85aba4" transform="rotate(12 23.5 23.5)" />
+                </svg>
+                <span>allurx<span class="brand-divider">/</span><strong>playground</strong></span>
+            </a>
+            <a class="home-link" href="https://allurx.io/">个人主页 <span aria-hidden="true">↗</span></a>
+        </header>
+
+        <main id="main" class="shell" tabindex="-1">
+            <section class="intro" aria-labelledby="intro-title">
+                <div>
+                    <p class="eyebrow"><span class="small-star" aria-hidden="true">✳</span> ALLURX PLAYGROUND</p>
+                    <h1 id="intro-title">
+                        给好奇心，<br />留一点<span class="play-word"
+                            >空间<svg viewBox="0 0 240 14" preserveAspectRatio="none" aria-hidden="true">
+                                <path d="M3 10Q112-3 237 7" /></svg></span
+                        >。
+                    </h1>
+                    <p class="intro-description">把冒出来的念头，做成可以玩的东西。<br />不用赶路，随便逛逛。</p>
+                </div>
+                <div class="play-objects" aria-hidden="true">
+                    <span class="object-orbit"></span>
+                    <span class="object-ball"></span>
+                    <span class="object-arch"></span>
+                    <span class="object-cube"></span>
+                    <span class="object-spark">✳</span>
+                    <span class="object-label">a little room to play</span>
+                </div>
+            </section>
+
+            <section class="collection" aria-labelledby="collection-title">
+                <div class="section-heading">
+                    <h2 id="collection-title">从这里开始玩</h2>
+                    <span class="collection-note">小实验，也有小乐趣。</span>
+                </div>
+                <article class="work-card" aria-labelledby="tiny-bay-title">
+                    <a class="work-preview" href="./tiny-bay/" tabindex="-1" aria-hidden="true">
+                        <img src="./tiny-bay.webp" width="1687" height="900" alt="" fetchpriority="high" />
+                        <span class="preview-caption">拨一下水面，看看会发生什么。</span>
+                    </a>
+                    <div class="work-copy">
+                        <div class="work-meta"><span>01</span><span class="tag">互动风景</span></div>
+                        <h3 id="tiny-bay-title"><a href="./tiny-bay/">小小海湾</a></h3>
+                        <p class="english-title" lang="en">Tiny Bay</p>
+                        <p class="work-description">
+                            一座放在掌心的小岛。拨动海水，拖一拖小船，让晴日变成落雪。也可以什么都不做，听一会儿海风。
+                        </p>
+                        <a class="play-link" href="./tiny-bay/">去海边待一会儿 <span aria-hidden="true">↗</span></a>
+                        <p class="requirements">需要支持 WebGPU 的浏览器与硬件加速。</p>
+                        <a class="download-link" href="./tiny-bay/tiny-bay.html" download="tiny-bay.html"
+                            ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4" /></svg
+                            >带走这个小世界<span>单文件 HTML</span></a
+                        >
+                    </div>
+                </article>
+            </section>
+            <p class="closing-note"><span aria-hidden="true">✳</span> 下一个念头，可能和这一个完全不同。</p>
+        </main>
+
+        <footer class="site-footer shell">
+            <p>© 2026 allurx</p>
+            <p>保持好奇，慢慢玩。</p>
+        </footer>
+    </body>
+</html>

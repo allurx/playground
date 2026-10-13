@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#e9eff1">
+  <meta name="description" content="小小海湾 Tiny Bay：可拨水、拖船、切换天气的极地微缩景观。">
+  <meta name="color-scheme" content="light dark">
+  <title>小小海湾 · Tiny Bay</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23253e4b'/%3E%3Cpath d='M11 37 25 19l10 12 7-8 12 14Z' fill='%23e8f5f4'/%3E%3Cpath d='M11 43q7-6 14 0t14 0 14 0' fill='none' stroke='%238ac6cf' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='45' cy='16' r='5' fill='%23df8669'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="engine.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="icon-mountains" viewBox="0 0 24 24"><path d="m2 17 7-10 5 7 3-4 5 7M7 10l2 2 2-2M2 21c2-2 4-2 6 0s4 2 6 0 4-2 8 0"/></symbol>
+    <symbol id="icon-whale" viewBox="0 0 24 24"><path d="M3 13c0 5 4 7 9 7 5 0 8-3 8-8V8l3-3-5 1-3-3v6c0 2-1 3-3 3H6c-2 0-3 0-3 1Z"/><path d="M6 15h.01M6 8V5m-2 2 2-2 2 2"/></symbol>
+    <symbol id="icon-sound" viewBox="0 0 24 24"><path d="m11 5-5 4H3v6h3l5 4V5Z"/><path d="M15 8a6 6 0 0 1 0 8M18 5a10 10 0 0 1 0 14"/></symbol>
+    <symbol id="icon-postcard" viewBox="0 0 24 24"><path d="M4 7h4l2-3h4l2 3h4a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"/><circle cx="12" cy="14" r="4"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></symbol>
+    <symbol id="icon-back" viewBox="0 0 24 24"><path d="M19 12H5m6-6-6 6 6 6"/></symbol>
+    <symbol id="icon-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4 2c-1 .6-1.5 1-1.5 2.5M12 17h.01"/></symbol>
+  </svg>
+
+  <canvas id="stage" tabindex="0" aria-label="可互动的北极小岛" aria-describedby="playHelp keyboardHelp" inert></canvas>
+
+  <header class="layer site-header">
+    <div class="wordmark">
+      <a class="back-link live" id="playgroundLink" href="../"><svg class="icon" aria-hidden="true"><use href="#icon-back"/></svg>返回 Playground</a>
+      <h1>小小海湾<span aria-hidden="true">。</span></h1><span>Tiny Bay · 71° N</span>
+    </div>
+    <div class="status" role="status"><i id="dot"></i><span id="statusText">小岛正在苏醒</span></div>
+  </header>
+
+  <aside class="layer panel live" id="panel" aria-label="海湾控制" inert>
+    <button class="sheetbar" id="sheetbar" aria-expanded="false" aria-controls="panelContent"><span>海湾控制</span><i aria-hidden="true"></i><span class="sheet-arrow" aria-hidden="true">⌃</span></button>
+    <div id="panelContent">
+      <div class="panel-scroll">
+      <section class="weather-section" aria-label="切换天气">
+        <div class="swatches">
+          <button class="swatch" data-palette="lagoon" aria-pressed="true"><i class="weather-orb daylight" aria-hidden="true"></i><span>晴日</span></button>
+          <button class="swatch" data-palette="raspberry" aria-pressed="false"><i class="weather-orb snowfall" aria-hidden="true"></i><span>飘雪</span></button>
+          <button class="swatch" data-palette="lime" aria-pressed="false"><i class="weather-orb aurora" aria-hidden="true"></i><span>极光</span></button>
+          <button class="swatch" data-palette="sunset" aria-pressed="false"><i class="weather-orb sunset" aria-hidden="true"></i><span>落日</span></button>
+        </div>
+      </section>
+      <section class="visitors-section" aria-label="海湾互动">
+        <div class="row2"><button class="shake whale-button" id="dropPebble"><svg class="icon" aria-hidden="true"><use href="#icon-whale"/></svg>唤鲸</button><button class="shake storm-button" id="dropCoconut" aria-pressed="false">风雪</button></div>
+        <div class="meter" aria-hidden="true"><b id="meter"></b></div>
+        <div class="sea-reactions" id="seaReactions" role="status" aria-live="polite">海豹在岸 · 小船平稳</div>
+        <div class="tally" hidden><span>漂浮<b id="nAfloat">0</b></span><span>沉没<b id="nSunk">0</b></span><span>靠岸<b id="nAshore">0</b></span></div>
+      </section>
+      <section class="sliders" aria-label="海湾参数">
+        <div class="slider"><label for="wind"><span>风力</span><output id="windOut">18</output></label><input type="range" id="wind" min="0" max="100" value="18"></div>
+        <div class="slider"><label for="damp"><span>平静速度</span><output id="dampOut">30</output></label><input type="range" id="damp" min="0" max="100" value="30" aria-describedby="dampHint"><p class="parameter-hint" id="dampHint">向右：水面与底座更快平静</p></div>
+        <div class="slider"><label for="tide"><span>潮位</span><output id="tideOut">0 厘米</output></label><input type="range" id="tide" min="-100" max="100" value="0"></div>
+        <div class="slider"><label for="clarity"><span>海水通透度</span><output id="clarityOut">60</output></label><input type="range" id="clarity" min="0" max="100" value="60"></div>
+        <div class="slider"><label for="light"><span>光照</span><output id="lightOut">65</output></label><input type="range" id="light" min="0" max="100" value="65"></div>
+        <div class="slider"><label for="firm"><span>回弹强度</span><output id="firmOut">50</output></label><input type="range" id="firm" min="0" max="100" value="50" aria-describedby="firmHint"><p class="parameter-hint" id="firmHint">向右：底座回弹、水波传播更快</p></div>
+      </section>
+      </div>
+      <div class="panel-footer"><div class="row3"><button id="reset">重置</button><button id="pause" aria-pressed="false">暂停</button><button id="resetView">复位视角</button></div></div>
+    </div>
+  </aside>
+
+  <footer class="layer bottom-bar">
+    <p id="playInvitation" class="play-invitation">拖一拖水面或小船，看看会发生什么。</p>
+    <div class="action-bar live" aria-label="海湾工具">
+      <button id="soundToggle" aria-pressed="false" title="环境声音默认关闭，点击开启"><svg class="icon" aria-hidden="true"><use href="#icon-sound"/></svg><span id="soundLabel">声音</span><span class="sound-indicator" aria-hidden="true"></span></button>
+      <button id="postcardButton" class="postcard-button" aria-haspopup="dialog" aria-controls="postcardDialog" title="拍摄当前风景"><svg class="icon" aria-hidden="true"><use href="#icon-postcard"/></svg><span>拍照</span></button>
+      <button id="helpButton" popovertarget="helpPopover" title="查看操作方法"><svg class="icon" aria-hidden="true"><use href="#icon-help"/></svg><span>怎么玩</span></button>
+    </div>
+  </footer>
+
+  <aside id="helpPopover" class="help-popover" popover aria-labelledby="helpTitle">
+    <div class="dialog-heading"><h2 id="helpTitle">怎么玩</h2><button class="icon-button" popovertarget="helpPopover" popovertargetaction="hide" aria-label="关闭操作说明" autofocus><svg class="icon" aria-hidden="true"><use href="#icon-close"/></svg></button></div>
+    <p id="playHelp">拖动水面拨起波浪，拖动小船和浮冰，拉一拉水面侧边与柔软底座。</p>
+    <p class="pointer-help">鼠标：右键拖动环绕，滚轮缩放。</p>
+    <p class="touch-help">触屏：双指移动环绕，双指开合缩放。</p>
+    <div id="keyboardHelp">
+      <p>键盘聚焦场景后：</p>
+      <dl class="key-guide">
+        <dt>方向键</dt><dd>环绕视角</dd>
+        <dt><kbd>+</kbd> / <kbd>−</kbd></dt><dd>放大 / 缩小</dd>
+        <dt><kbd>W</kbd> / 空格</dt><dd>拨水 / 唤鲸</dd>
+        <dt><kbd>P</kbd> / <kbd>R</kbd></dt><dd>暂停或继续 / 复位视角</dd>
+      </dl>
+    </div>
+    <p class="help-note">暂停后仍可调整视角。按 Esc 或点击空白处关闭说明。</p>
+  </aside>
+
+  <dialog id="postcardDialog" class="postcard-dialog" aria-labelledby="postcardTitle">
+    <div class="dialog-heading"><h2 id="postcardTitle">保存这一刻</h2><button class="icon-button" data-close-dialog="postcardDialog" aria-label="关闭拍照"><svg class="icon" aria-hidden="true"><use href="#icon-close"/></svg></button></div>
+    <div class="postcard-preview"><canvas id="postcardCanvas" width="1400" height="880" aria-label="照片预览"></canvas></div>
+    <label class="postcard-label" for="postcardMessage">留言（可选）<span>最多 40 字</span></label>
+    <textarea id="postcardMessage" rows="2" maxlength="40" placeholder="写点什么……"></textarea>
+    <div class="postcard-actions"><button class="secondary-button" id="postcardRefresh">重新拍摄</button><button class="primary-button" id="postcardDownload"><svg class="icon" aria-hidden="true"><use href="#icon-download"/></svg>保存图片</button></div>
+    <p id="postcardStatus" class="dialog-footnote" role="status">图片仅保存到本机。</p>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="fallback" role="alert"><div><svg class="fallback-icon icon" aria-hidden="true"><use href="#icon-mountains"/></svg><h2 id="fallbackTitle" tabindex="-1">无法显示场景</h2><p id="fallbackText">请使用支持 WebGPU 的浏览器，并开启硬件加速。也可以通过左上角返回集合页。</p></div></div>
+</body>
+</html>

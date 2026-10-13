@@ -1,0 +1,29 @@
+{
+    "name": "playground",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "description": "allurx 的交互作品与浏览器实验。",
+    "workspaces": [
+        "projects/*"
+    ],
+    "engines": {
+        "node": "24.21.0"
+    },
+    "scripts": {
+        "dev": "npm run build && vite preview",
+        "format": "prettier . --write",
+        "format:check": "prettier . --check",
+        "lint": "eslint . --max-warnings 0",
+        "check:syntax": "node --check scripts/build.mjs && npm run check:syntax --workspaces --if-present",
+        "check": "npm run format:check && npm run lint && npm run check:syntax",
+        "build": "npm run build --workspaces --if-present && node scripts/build.mjs",
+        "verify": "npm run check && npm run build",
+        "preview": "wrangler dev --port 4175",
+        "deploy": "wrangler deploy"
+    },
+    "devDependencies": {
+        "@allurx/web-foundation": "git+https://github.com/allurx/web-foundation.git#v1.0.2"
+    },
+    "prettier": "@allurx/web-foundation/prettier"
+}

@@ -1,0 +1,11 @@
+{
+    "name": "@playground/tiny-bay",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "npm --prefix ../.. run dev -- --open /tiny-bay/",
+        "build": "node scripts/build.mjs",
+        "check:syntax": "node --check scripts/build.mjs && node --check engine.js && node --check app.js"
+    }
+}
