@@ -8,6 +8,8 @@ on:
         branches:
             - main
 
+    workflow_dispatch:
+
 permissions:
     contents: read
 
@@ -17,8 +19,16 @@ concurrency:
 
 jobs:
     site:
-        uses: allurx/web-foundation/.github/workflows/static-site.yml@v1.0.2
+        uses: allurx/web-foundation/.github/workflows/static-site.yml@main
         with:
             asset-directory: dist/
             production-url: https://play.allurx.io
         secrets: inherit
+
+    dependabot-merge:
+        needs: site
+        permissions:
+            contents: write
+            pull-requests: write
+            actions: write
+        uses: allurx/web-foundation/.github/workflows/dependabot-site.yml@main

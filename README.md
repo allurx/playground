@@ -45,4 +45,4 @@ Cloudflare 预览地址为 <http://localhost:4175/>。局域网 HTTP 地址可�
 
 发布前完成 `npm run verify`，再按 [Wrangler 部署说明](https://developers.cloudflare.com/workers/wrangler/commands/#deploy) 登录有权限的账户并运行 `npm run deploy`。在线作品使用 `/tiny-bay/` 目录地址，未知路径返回 404。
 
-开发工具与共享 CI 来自 [Web Foundation](https://github.com/allurx/web-foundation)。接入远端仓库后的凭据、环境与部署配置参考其 [Workers 静态站点工作流](https://github.com/allurx/web-foundation/blob/v1.0.2/.github/workflows/static-site.yml)。
+开发工具与共享 CI 来自 [Web Foundation](https://github.com/allurx/web-foundation)。共享工作流跟随 `main`，基础包保持固定发布标签和锁文件。凭据、环境与部署配置见[共享部署说明](https://github.com/allurx/web-foundation/blob/main/docs/deployment.md)；依赖更新、自动合并与合并后的部署续接见[共享依赖说明](https://github.com/allurx/web-foundation/blob/main/docs/dependencies.md)。
