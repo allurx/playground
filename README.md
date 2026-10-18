@@ -2,6 +2,8 @@
 
 把小创意做成可以玩的东西。集合首页提供作品入口，每件作品独立运行。
 
+在线体验：[play.allurx.io](https://play.allurx.io)。
+
 目前收录 **小小海湾（Tiny Bay）**：可以拨水、拖船、调整天气的微缩景观，带环境声音与照片导出。需要支持 [WebGPU](https://developer.mozilla.org/zh-CN/docs/Web/API/WebGPU_API) 的浏览器，并开启硬件加速。
 
 ## 本地运行
@@ -43,7 +45,7 @@ Cloudflare 预览地址为 <http://localhost:4175/>。局域网 HTTP 地址可�
 
 ## 部署
 
-使用 [Cloudflare Workers Static Assets](https://developers.cloudflare.com/workers/static-assets/)，配置见 [wrangler.jsonc](wrangler.jsonc)。目标域名为 `play.allurx.io`；配置文件不代表该域名已经上线。
+使用 [Cloudflare Workers Static Assets](https://developers.cloudflare.com/workers/static-assets/) 托管，部署配置见 [wrangler.jsonc](wrangler.jsonc)。
 
 发布前完成 `npm run verify`，再按 [Wrangler 部署说明](https://developers.cloudflare.com/workers/wrangler/commands/#deploy) 登录有权限的账户并运行 `npm run deploy`。在线作品使用 `/tiny-bay/` 目录地址，未知路径返回带首页入口的 404 页面。
 
