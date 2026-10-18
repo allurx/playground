@@ -1,3 +1,6 @@
+// Copyright 2026 allurx
+// SPDX-License-Identifier: Apache-2.0
+
 {
     "$schema": "./node_modules/wrangler/config-schema.json",
     "name": "playground",
@@ -6,6 +9,7 @@
     "preview_urls": false,
     "routes": [{ "pattern": "play.allurx.io", "custom_domain": true }],
     "assets": {
+        "not_found_handling": "404-page",
         "directory": "./dist",
     },
 }

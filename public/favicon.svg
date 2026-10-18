@@ -1,3 +1,8 @@
+<!--
+Copyright 2026 allurx
+SPDX-License-Identifier: Apache-2.0
+-->
+
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
     <rect width="64" height="64" rx="16" fill="#f8f7f3"/>
     <rect x="10" y="10" width="18" height="18" rx="6" fill="#2f615d"/>

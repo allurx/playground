@@ -1,4 +1,7 @@
-// Copyright (c) 2026 allurx
+/*
+ * Copyright 2026 allurx
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 import { mergeConfig } from "vite";
 import base from "@allurx/js-config/vite";

@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "private": true,
     "type": "module",
+    "license": "Apache-2.0",
     "scripts": {
         "dev": "npm --prefix ../.. run dev -- --open /tiny-bay/",
         "build": "node scripts/build.mjs",

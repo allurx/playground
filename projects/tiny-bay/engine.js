@@ -1,4 +1,9 @@
 
+/*
+ * Copyright 2026 allurx
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 'use strict';
 // ───────────────────────────── math & helpers ─────────────────────────────
 const TAU = Math.PI * 2;

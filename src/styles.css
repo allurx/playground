@@ -1,4 +1,7 @@
-/* Copyright (c) 2026 allurx */
+/*
+ * Copyright 2026 allurx
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 @layer reset, base, layout, components, accessibility;
 

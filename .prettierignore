@@ -1,6 +1,10 @@
+# Copyright 2026 allurx
+# SPDX-License-Identifier: Apache-2.0
+
 **/dist/
 .wrangler/
 work/
+package-lock.json
 
 # Retain the imported source formatting; lint and syntax checks still apply.
 projects/tiny-bay/index.html

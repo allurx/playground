@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 allurx
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { defineConfig, globalIgnores } from "eslint/config";
 import base, { browser, node, typeChecked } from "@allurx/js-config/eslint";
 
