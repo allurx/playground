@@ -1,0 +1,4 @@
+{
+    "extends": "@allurx/js-config/tsconfig/node",
+    "include": ["eslint.config.ts", "vite.config.ts"]
+}

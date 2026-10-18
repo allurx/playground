@@ -16,14 +16,22 @@
         "format:check": "prettier . --check",
         "lint": "eslint . --max-warnings 0",
         "check:syntax": "node --check scripts/build.mjs && npm run check:syntax --workspaces --if-present",
-        "check": "npm run format:check && npm run lint && npm run check:syntax",
+        "type-check": "tsc --noEmit",
+        "check": "npm run format:check && npm run lint && npm run check:syntax && npm run type-check",
         "build": "npm run build --workspaces --if-present && node scripts/build.mjs",
         "verify": "npm run check && npm run build",
         "preview": "wrangler dev --port 4175",
         "deploy": "wrangler deploy"
     },
     "devDependencies": {
-        "@allurx/web-foundation": "git+https://github.com/allurx/web-foundation.git#v1.0.2"
+        "@allurx/js-config": "1.0.1",
+        "@types/node": "24.19.1",
+        "eslint": "10.12.0",
+        "jiti": "2.7.0",
+        "prettier": "3.9.10",
+        "typescript": "6.0.3",
+        "vite": "8.3.4",
+        "wrangler": "4.147.0"
     },
-    "prettier": "@allurx/web-foundation/prettier"
+    "prettier": "@allurx/js-config/prettier"
 }

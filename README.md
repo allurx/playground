@@ -45,4 +45,6 @@ Cloudflare 预览地址为 <http://localhost:4175/>。局域网 HTTP 地址可�
 
 发布前完成 `npm run verify`，再按 [Wrangler 部署说明](https://developers.cloudflare.com/workers/wrangler/commands/#deploy) 登录有权限的账户并运行 `npm run deploy`。在线作品使用 `/tiny-bay/` 目录地址，未知路径返回 404。
 
-开发工具与共享 CI 来自 [Web Foundation](https://github.com/allurx/web-foundation)。共享工作流跟随 `main`，基础包保持固定发布标签和锁文件。凭据、环境与部署配置见[共享部署说明](https://github.com/allurx/web-foundation/blob/main/docs/deployment.md)；依赖更新、自动合并与合并后的部署续接见[共享依赖说明](https://github.com/allurx/web-foundation/blob/main/docs/dependencies.md)。
+共同工具配置与 CI 来自 [allurx-build](https://github.com/allurx/allurx-build)。`@allurx/js-config` 使用已发布的精确版本，工作流固定完整 commit SHA；各作品的源码与构建仍由对应 workspace 维护。凭据、环境与部署配置见[共享部署说明](https://github.com/allurx/allurx-build/blob/main/docs/cloudflare-static-site.md)。
+
+[Renovate 配置](.github/renovate.json)沿用[共享依赖策略](https://github.com/allurx/allurx-build/blob/main/docs/dependency-updates.md)，向 `main` 提出更新 PR。符合策略的常规更新在完整检查通过后自动合并，共享配置与工作流升级保留人工审核；合入 `main` 后由正常 CI 验证并部署该提交的产物。

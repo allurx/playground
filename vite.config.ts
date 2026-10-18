@@ -1,7 +1,7 @@
 // Copyright (c) 2026 allurx
 
 import { mergeConfig } from "vite";
-import base from "@allurx/web-foundation/vite";
+import base from "@allurx/js-config/vite";
 
 export default mergeConfig(base, {
     preview: {
