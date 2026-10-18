@@ -5,3 +5,4 @@
 
 /tiny-bay/tiny-bay*
   Content-Disposition: attachment; filename="tiny-bay.html"
+  Cache-Control: public, must-revalidate, max-age=0, no-transform
