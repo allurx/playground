@@ -1,0 +1,8 @@
+{
+    "extends": "@allurx/js-config/tsconfig/browser",
+    "compilerOptions": {
+        "types": ["@webgpu/types"],
+        "tsBuildInfoFile": "../../node_modules/.cache/typescript/tiny-bay.browser.tsbuildinfo"
+    },
+    "include": ["src/**/*.ts"]
+}

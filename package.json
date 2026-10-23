@@ -13,14 +13,16 @@
         "node": "24.21.0"
     },
     "scripts": {
-        "dev": "npm run build && vite preview",
+        "dev": "npm run build:web && vite preview",
         "format": "prettier . --write",
         "format:check": "prettier . --check",
         "lint": "eslint . --max-warnings 0",
-        "check:syntax": "node --check scripts/build.mjs && npm run check:syntax --workspaces --if-present",
-        "type-check": "tsc -b --noEmit",
-        "check": "npm run format:check && npm run lint && npm run check:syntax && npm run type-check",
-        "build": "npm run build --workspaces --if-present && node scripts/build.mjs",
+        "type-check": "tsc -b --noEmit && npm run type-check --workspaces",
+        "check": "npm run format:check && npm run lint && npm run type-check",
+        "build": "npm run build:web && npm run build:portable",
+        "build:web": "npm run build --workspaces && node scripts/build.ts web",
+        "build:portable": "npm run build:portable --workspaces && node scripts/build.ts portable",
+        "package:release": "node scripts/package-release.ts",
         "verify": "npm run check && npm run build",
         "preview": "wrangler dev --port 4175",
         "deploy": "wrangler deploy"
@@ -33,6 +35,7 @@
         "prettier": "3.9.10",
         "typescript": "6.0.3",
         "vite": "8.3.4",
+        "vite-plugin-singlefile": "2.3.4",
         "wrangler": "4.151.1"
     },
     "prettier": "@allurx/js-config/prettier"

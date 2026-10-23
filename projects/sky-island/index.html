@@ -1,0 +1,122 @@
+<!doctype html>
+<!-- Copyright 2026 allurx | SPDX-License-Identifier: Apache-2.0 -->
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta name="theme-color" content="#88b8eb" />
+        <meta name="description" content="一座漂浮在云海中的小城，风车转动，瀑布落入天空。" />
+        <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+        <link rel="stylesheet" href="./src/styles.css" />
+        <title>云上城堡 · Playground</title>
+    </head>
+    <body>
+        <main class="experience" aria-label="云上城堡">
+            <canvas
+                id="scene"
+                tabindex="0"
+                aria-label="云上城堡互动场景，支持拖拽环视、滚轮缩放和方向键。"
+                inert
+            ></canvas>
+            <header class="scene-header control-header">
+                <a
+                    class="icon-button back-link"
+                    id="playgroundLink"
+                    href="../"
+                    aria-label="返回作品集"
+                    title="返回作品集"
+                >
+                    <span class="icon" data-icon="back" aria-hidden="true"></span>
+                </a>
+                <h1>云上城堡</h1>
+            </header>
+
+            <div class="loading-message" id="loading" role="status">云海正在苏醒</div>
+            <section class="error-message" id="error" hidden aria-labelledby="error-title">
+                <h2 id="error-title">暂时无法打开这个小世界</h2>
+                <p id="error-detail">请使用支持 WebGL 2 的浏览器，并开启硬件加速。</p>
+                <button type="button" id="retry">重新加载</button>
+                <a href="../">返回作品集</a>
+                <a
+                    class="release-link error-download"
+                    href="https://github.com/allurx/playground/releases"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="版本与下载（新窗口）"
+                    ><span class="icon" data-icon="download" aria-hidden="true"></span>版本与下载</a
+                >
+            </section>
+
+            <div class="toolbar control-toolbar control-dock" role="group" aria-label="场景工具" inert>
+                <button
+                    type="button"
+                    class="icon-button playback-button"
+                    id="pause"
+                    aria-label="暂停"
+                    title="暂停"
+                    aria-pressed="false"
+                >
+                    <span class="icon" data-icon="pause" aria-hidden="true"></span>
+                    <span class="icon" data-icon="play" aria-hidden="true"></span>
+                    <span id="pauseLabel" class="sr-only">暂停</span>
+                </button>
+                <button type="button" class="icon-button" id="reset" aria-label="复位视角" title="复位视角">
+                    <span class="icon" data-icon="reset" aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <button
+                type="button"
+                class="icon-button settings-button control-corner"
+                id="settingsToggle"
+                popovertarget="settings"
+                aria-label="场景设置"
+                aria-controls="settings"
+                aria-expanded="false"
+                title="场景设置"
+                disabled
+            >
+                <span class="icon" data-icon="settings" aria-hidden="true"></span>
+                <span class="icon" data-icon="close" aria-hidden="true"></span>
+            </button>
+
+            <aside class="settings control-panel" id="settings" popover aria-labelledby="settings-title">
+                <div class="settings-heading">
+                    <h2 id="settings-title">场景</h2>
+                    <button
+                        type="button"
+                        class="icon-button"
+                        popovertarget="settings"
+                        popovertargetaction="hide"
+                        aria-label="关闭设置"
+                    >
+                        <span class="icon" data-icon="close" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <button type="button" class="setting-toggle" id="orbit" aria-pressed="true">
+                    自动环绕<span aria-hidden="true"></span>
+                </button>
+                <button type="button" class="setting-toggle" id="clouds" aria-pressed="true">
+                    云朵<span aria-hidden="true"></span>
+                </button>
+                <div class="zoom-controls" role="group" aria-label="视角距离">
+                    <button type="button" id="zoom-out" aria-label="拉远视角">拉远</button>
+                    <button type="button" id="zoom-in" aria-label="拉近视角">拉近</button>
+                </div>
+                <a
+                    class="release-link"
+                    href="https://github.com/allurx/playground/releases"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="版本与下载（新窗口）"
+                    ><span class="icon" data-icon="download" aria-hidden="true"></span>版本与下载</a
+                >
+            </aside>
+            <div class="sr-only" id="announcement" role="status" aria-live="polite"></div>
+            <noscript
+                ><p class="error-message">请启用 JavaScript 后查看互动场景。<a href="../">返回作品集</a></p></noscript
+            >
+        </main>
+        <script type="module" src="./src/app.ts"></script>
+    </body>
+</html>

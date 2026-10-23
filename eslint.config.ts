@@ -10,15 +10,23 @@ export default defineConfig(
     globalIgnores(["**/dist/", ".wrangler/", "work/"]),
     base,
 
-    // Tool configuration is type-checked; each work keeps its own source checks.
+    // Every workspace participates in the same typed rules with its own environment.
     {
-        files: ["*.ts"],
-        extends: [typeChecked, node],
+        files: ["**/*.ts"],
+        extends: [typeChecked],
         languageOptions: {
             parserOptions: { tsconfigRootDir: import.meta.dirname },
         },
     },
 
-    { files: ["projects/**/*.js", "src/**/*.js", "public/**/*.js"], extends: [browser] },
-    { files: ["scripts/**/*.mjs", "projects/*/scripts/**/*.mjs"], extends: [node] }
+    {
+        files: ["projects/*/src/**/*.ts"],
+        extends: [browser],
+    },
+    {
+        files: ["projects/tiny-bay/src/engine.ts"],
+        // The numeric kernel indexes fixed-size buffers inside bounded loops; keep those assertions explicit.
+        rules: { "@typescript-eslint/no-non-null-assertion": "off" },
+    },
+    { files: ["*.ts", "scripts/**/*.ts", "build/**/*.ts", "projects/*/vite.config.ts"], extends: [node] }
 );

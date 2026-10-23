@@ -1,0 +1,20 @@
+{
+    "name": "@playground/sky-island",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "license": "Apache-2.0",
+    "description": "云海中的蓝顶城堡、环湖村落与悬浮岛。",
+    "scripts": {
+        "dev": "npm --prefix ../.. run dev -- --open /sky-island/",
+        "build": "vite build",
+        "build:portable": "vite build --mode portable",
+        "type-check": "tsc -b --noEmit"
+    },
+    "dependencies": {
+        "three": "0.186.1"
+    },
+    "devDependencies": {
+        "@types/three": "0.186.0"
+    }
+}

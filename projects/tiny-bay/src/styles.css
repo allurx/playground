@@ -1,0 +1,577 @@
+/*
+ * Copyright 2026 allurx
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@import "../../../shared/controls.css";
+
+:root {
+    --paper: #d2e5e3;
+    --ink: #29434d;
+    --muted: #48606a;
+    --line: #45677324;
+    --glass: #eef7e9eb;
+    --surface: #ffffff80;
+    --accent: #477e87;
+    --active: #477e8712;
+    --shadow: 0 8px 32px #203e4c0c;
+    color-scheme: light;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-synthesis: none;
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+body {
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+}
+button,
+h1,
+h2,
+p {
+    margin: 0;
+}
+[data-icon="mountains"] {
+    --icon-image: url("./icons/mountains.svg?inline");
+}
+[data-icon="whale"] {
+    --icon-image: url("./icons/whale.svg?inline");
+}
+
+/* The scene always owns the full viewport, independent of floating controls. */
+#stage {
+    position: fixed;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+    cursor: grab;
+}
+#stage.is-grabbing {
+    cursor: grabbing;
+}
+#stage.is-pick {
+    cursor: pointer;
+}
+#stage.is-water {
+    cursor: crosshair;
+}
+#stage.is-tilt {
+    cursor: move;
+}
+.layer {
+    pointer-events: none;
+}
+.layer .live {
+    pointer-events: auto;
+}
+
+/* The settings card is closed by default at every viewport size. */
+.panel {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: min(292px, calc(100vw - 32px));
+}
+.sheetbar {
+    align-self: flex-end;
+}
+#panelContent {
+    display: none;
+    flex-direction: column;
+    margin-top: 10px;
+}
+.panel.open #panelContent {
+    display: flex;
+    pointer-events: auto;
+}
+.panel-scroll {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+}
+.weather-section {
+    padding: 12px;
+}
+.swatches {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+}
+.swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 68px;
+    padding: 9px 4px;
+    border: 1px solid transparent;
+    border-radius: 11px;
+    background: transparent;
+    font-size: 11px;
+}
+.swatch:hover {
+    background: var(--surface);
+}
+.swatch[aria-pressed="true"] {
+    border-color: var(--line);
+    background: var(--surface);
+}
+.weather-orb {
+    display: block;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    box-shadow:
+        inset 0 2px 4px #ffffff66,
+        inset 0 -3px 4px #1a495d26;
+}
+.weather-orb.daylight {
+    background: radial-gradient(circle at 33% 28%, #f2fbff, #a7dce5 60%, #73a9bc);
+}
+.weather-orb.snowfall {
+    background: radial-gradient(circle at 33% 28%, #f2f6f9, #b7c5d3 60%, #8598ad);
+}
+.weather-orb.aurora {
+    background: linear-gradient(140deg, #1b465a, #69cbaa 50%, #2c4f70 78%);
+}
+.weather-orb.sunset {
+    background: radial-gradient(circle at 33% 28%, #ffe0aa, #e89e81 58%, #bb8092);
+}
+.storm-button {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    margin-top: 8px;
+    padding: 9px 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: transparent;
+    font-size: 12px;
+}
+.storm-button:hover,
+.storm-button[aria-pressed="true"] {
+    border-color: var(--accent);
+    background: var(--active);
+    color: var(--accent);
+}
+.parameters {
+    border-top: 1px solid var(--line);
+}
+.parameters summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 48px;
+    padding: 8px 19px;
+    border-radius: 4px;
+    cursor: pointer;
+    list-style: none;
+    font-size: 12px;
+}
+.parameters summary::-webkit-details-marker {
+    display: none;
+}
+.parameters summary span {
+    font-size: 19px;
+    font-weight: 300;
+    color: var(--muted);
+}
+.parameters[open] summary span {
+    transform: rotate(45deg);
+}
+.sliders {
+    padding: 4px 19px 10px;
+}
+.slider + .slider {
+    margin-top: 6px;
+}
+.slider label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+.slider output {
+    color: var(--muted);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+}
+input[type="range"] {
+    appearance: none;
+    -webkit-appearance: none;
+    display: block;
+    width: 100%;
+    height: 44px;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 2px;
+    border-radius: 2px;
+    background: var(--line);
+}
+input[type="range"]::-moz-range-track {
+    height: 2px;
+    border-radius: 2px;
+    background: var(--line);
+}
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 13px;
+    height: 13px;
+    margin-top: -5.5px;
+    border: 2px solid var(--glass);
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 1px 4px #234b571f;
+}
+input[type="range"]::-moz-range-thumb {
+    width: 9px;
+    height: 9px;
+    border: 2px solid var(--glass);
+    border-radius: 50%;
+    background: var(--accent);
+}
+.panel-footer {
+    display: grid;
+    flex-shrink: 0;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    padding: 7px 12px;
+    border-top: 1px solid var(--line);
+}
+.panel-footer button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 44px;
+    padding: 9px 6px;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--muted);
+    font-size: 12px;
+}
+.panel-footer button:hover {
+    background: var(--surface);
+    color: var(--ink);
+}
+.panel-footer .release-link {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--line);
+    border-radius: 0 0 9px 9px;
+}
+
+/* Four quiet controls keep common actions within reach. */
+.sound-indicator {
+    position: absolute;
+    right: 9px;
+    bottom: 8px;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0;
+}
+#soundToggle[aria-pressed="true"] .sound-indicator {
+    opacity: 1;
+}
+
+/* The postcard keeps its header and actions visible while the content scrolls. */
+.postcard-dialog {
+    width: min(620px, calc(100vw - 32px));
+    max-height: calc(100dvh - 32px);
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 0 24px 100px #142d3733;
+}
+.postcard-dialog[open] {
+    display: flex;
+    flex-direction: column;
+}
+.postcard-dialog::backdrop {
+    background: #203b4826;
+    backdrop-filter: blur(8px);
+}
+.dialog-heading {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 20px 12px;
+}
+.dialog-heading h2 {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+}
+.postcard-content {
+    min-height: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    padding: 0 20px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+}
+.postcard-preview {
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--surface);
+    box-shadow: 0 2px 12px #263f4a0a;
+}
+#postcardCanvas {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.postcard-label {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 18px 0 8px;
+    font-size: 12px;
+}
+.postcard-label span {
+    color: var(--muted);
+    font-size: 11px;
+}
+#postcardMessage {
+    display: block;
+    width: 100%;
+    min-height: 72px;
+    max-height: 150px;
+    resize: vertical;
+    padding: 11px 12px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--surface);
+    font-size: 16px;
+    line-height: 1.6;
+}
+#postcardMessage::placeholder {
+    color: var(--muted);
+}
+.postcard-footer {
+    flex-shrink: 0;
+    padding: 16px 20px 18px;
+}
+.postcard-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 9px;
+}
+.primary-button,
+.secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 10px 16px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: transparent;
+    font-size: 12px;
+}
+.primary-button {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+}
+.primary-button:hover {
+    border-color: var(--accent);
+    background: var(--accent);
+}
+.secondary-button:hover {
+    background: var(--surface);
+}
+.dialog-footnote {
+    margin-top: 11px;
+    color: var(--muted);
+    text-align: right;
+    font-size: 11px;
+    line-height: 1.6;
+}
+.toast {
+    position: fixed;
+    z-index: 8;
+    bottom: calc(94px + env(safe-area-inset-bottom));
+    left: 50%;
+    width: max-content;
+    max-width: calc(100vw - 32px);
+    transform: translate(-50%, 6px);
+    padding: 11px 17px;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: var(--glass);
+    box-shadow: var(--shadow);
+    color: var(--ink);
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        opacity 160ms,
+        transform 160ms;
+}
+.toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+#fallback {
+    position: fixed;
+    inset: 0;
+    z-index: 9;
+    display: none;
+    place-items: center;
+    padding: 32px;
+    background: var(--paper);
+    text-align: center;
+}
+#fallback.show {
+    display: grid;
+}
+#fallback > div {
+    max-width: 360px;
+    max-height: calc(100dvh - 64px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+.fallback-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 20px;
+    color: var(--accent);
+}
+#fallback h2 {
+    margin-bottom: 14px;
+    font-size: 20px;
+    font-weight: 500;
+}
+#fallbackTitle:focus {
+    outline: none;
+}
+#fallbackText {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+body.scene-error .panel,
+body.scene-error .bottom-bar {
+    display: none;
+}
+
+/* Scene palettes also color the interface without changing its layout. */
+body.sunset {
+    --paper: #edddd0;
+    --ink: #4b4144;
+    --muted: #6c5b5f;
+    --line: #75595d26;
+    --glass: #fdf7eee0;
+    --surface: #fffcf6a1;
+    --accent: #a35f48;
+    --active: #a35f4812;
+}
+body.night {
+    --paper: #102536;
+    --ink: #e0eef0;
+    --muted: #a0bcc7;
+    --line: #a1c2cf29;
+    --glass: #152b3be0;
+    --surface: #85b4c016;
+    --accent: #aed5cf;
+    --active: #aed5cf17;
+    color-scheme: dark;
+}
+
+@media (max-width: 600px) {
+    .dialog-heading,
+    .postcard-footer,
+    .postcard-content {
+        padding-inline: 16px;
+    }
+}
+@media (max-height: 440px) {
+    .postcard-dialog {
+        max-height: calc(100dvh - 20px);
+    }
+    .dialog-heading {
+        padding-block: 6px;
+    }
+    .postcard-footer {
+        padding-block: 10px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+    }
+}
+
+@media (forced-colors: active) {
+    .swatch,
+    .storm-button {
+        border-color: ButtonText;
+    }
+
+    .swatch[aria-pressed="true"],
+    .storm-button[aria-pressed="true"] {
+        /* Keep the paired system colors without an extra text backplate. */
+        forced-color-adjust: none;
+        background: Highlight;
+        color: HighlightText;
+        border-color: Highlight;
+    }
+
+    input[type="range"]::-webkit-slider-runnable-track {
+        background: ButtonText;
+    }
+
+    input[type="range"]::-moz-range-track {
+        background: ButtonText;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+        background: Highlight;
+        border-color: Canvas;
+        outline: 1px solid ButtonText;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+        background: Highlight;
+        border-color: Canvas;
+        outline: 1px solid ButtonText;
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "extends": "@allurx/js-config/tsconfig/node",
+    "compilerOptions": {
+        "tsBuildInfoFile": "../../node_modules/.cache/typescript/tiny-bay.node.tsbuildinfo"
+    },
+    "include": ["vite.config.ts"]
+}

@@ -1,0 +1,6 @@
+# Copyright 2026 allurx
+# SPDX-License-Identifier: Apache-2.0
+
+# Preserve the previous download URL after downloads move to versioned releases.
+/tiny-bay/tiny-bay.html https://github.com/allurx/playground/releases 302
+/tiny-bay/tiny-bay https://github.com/allurx/playground/releases 302

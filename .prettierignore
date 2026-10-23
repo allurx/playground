@@ -5,9 +5,3 @@
 .wrangler/
 work/
 package-lock.json
-
-# Retain the imported source formatting; lint and syntax checks still apply.
-projects/tiny-bay/index.html
-projects/tiny-bay/styles.css
-projects/tiny-bay/engine.js
-projects/tiny-bay/app.js

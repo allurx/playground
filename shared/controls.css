@@ -1,0 +1,294 @@
+/*
+ * Copyright 2026 allurx
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+:root {
+    --control-edge: 24px;
+    --control-bottom: 24px;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+    color: inherit;
+}
+
+button,
+a,
+input,
+textarea,
+summary {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    cursor: pointer;
+    transition:
+        color 160ms,
+        background 160ms,
+        border-color 160ms;
+}
+
+button:disabled {
+    cursor: default;
+    opacity: 0.4;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+    outline: 2px solid var(--accent, currentColor);
+    outline-offset: 3px;
+}
+
+canvas:focus-visible {
+    outline: 2px solid var(--accent, currentColor);
+    outline-offset: -6px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.icon {
+    display: block;
+    flex-shrink: 0;
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Explicit inlining keeps masks inside both Web bundles and portable HTML. */
+.icon[data-icon] {
+    background: currentColor;
+    mask: var(--icon-image) center / contain no-repeat;
+    -webkit-mask: var(--icon-image) center / contain no-repeat;
+}
+
+[data-icon="back"] {
+    --icon-image: url("./icons/back.svg?inline");
+}
+[data-icon="settings"] {
+    --icon-image: url("./icons/settings.svg?inline");
+}
+[data-icon="pause"] {
+    --icon-image: url("./icons/pause.svg?inline");
+}
+[data-icon="play"] {
+    --icon-image: url("./icons/play.svg?inline");
+}
+[data-icon="reset"] {
+    --icon-image: url("./icons/reset.svg?inline");
+}
+[data-icon="close"] {
+    --icon-image: url("./icons/close.svg?inline");
+}
+[data-icon="download"] {
+    --icon-image: url("./icons/download.svg?inline");
+}
+[data-icon="sound"] {
+    --icon-image: url("./icons/sound.svg?inline");
+}
+[data-icon="camera"] {
+    --icon-image: url("./icons/camera.svg?inline");
+}
+
+.icon-button {
+    position: relative;
+    display: inline-flex;
+    flex: 0 0 44px;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ink, currentColor);
+    text-decoration: none;
+}
+
+.icon-button:hover {
+    background: var(--surface, #ffffff80);
+}
+
+.icon-button[aria-pressed="true"],
+.icon-button[aria-expanded="true"] {
+    background: var(--active, #477e8712);
+    color: var(--accent, currentColor);
+}
+
+.playback-button [data-icon="play"],
+.playback-button[aria-pressed="true"] [data-icon="pause"] {
+    display: none;
+}
+
+.playback-button[aria-pressed="true"] [data-icon="play"] {
+    display: block;
+}
+
+.settings-button [data-icon="close"],
+.settings-button[aria-expanded="true"] [data-icon="settings"] {
+    display: none;
+}
+
+.settings-button[aria-expanded="true"] [data-icon="close"] {
+    display: block;
+}
+
+.control-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 5px;
+    border: 1px solid var(--line, #45677324);
+    border-radius: 30px;
+    background: var(--glass, #f8fcf7d9);
+    box-shadow: var(--shadow, 0 8px 32px #203e4c0c);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.control-corner {
+    position: fixed;
+    z-index: 3;
+    top: max(var(--control-edge), env(safe-area-inset-top));
+    right: max(var(--control-edge), env(safe-area-inset-right));
+}
+
+.control-header {
+    position: fixed;
+    z-index: 10;
+    top: max(var(--control-edge), env(safe-area-inset-top));
+    left: max(var(--control-edge), env(safe-area-inset-left));
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    pointer-events: none;
+}
+
+.control-header h1 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+}
+
+.control-header .icon-button {
+    pointer-events: auto;
+}
+
+.control-dock {
+    position: fixed;
+    z-index: 2;
+    bottom: max(var(--control-bottom), env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.control-panel {
+    max-height: calc(
+        100dvh - max(var(--control-edge), env(safe-area-inset-top)) -
+            max(var(--control-bottom), env(safe-area-inset-bottom)) - 112px
+    );
+    overflow: hidden;
+    border: 1px solid var(--line, #45677324);
+    border-radius: 18px;
+    background: var(--glass, #f8fcf7d9);
+    box-shadow: var(--shadow, 0 8px 32px #203e4c0c);
+    color: var(--ink, inherit);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+}
+
+.release-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 8px 12px;
+    border-radius: 9px;
+    color: var(--muted, currentColor);
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.release-link:hover {
+    background: var(--surface, #ffffff80);
+    color: var(--ink, currentColor);
+}
+
+.error-download {
+    margin-top: 16px;
+}
+
+@media (max-width: 600px) {
+    :root {
+        --control-edge: 14px;
+        --control-bottom: 16px;
+    }
+    .control-header h1 {
+        font-size: 12px;
+    }
+}
+
+@media (max-height: 440px) {
+    :root {
+        --control-edge: 8px;
+        --control-bottom: 10px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    button,
+    .release-link {
+        transition: none;
+    }
+}
+
+@media (forced-colors: active) {
+    /* Masks need the system text color instead of the forced background color. */
+    .icon[data-icon] {
+        forced-color-adjust: preserve-parent-color;
+    }
+
+    .control-toolbar,
+    .control-panel {
+        background: Canvas;
+    }
+
+    .icon-button {
+        background: ButtonFace;
+        color: ButtonText;
+    }
+
+    .icon-button[aria-pressed="true"],
+    .icon-button[aria-expanded="true"] {
+        background: Highlight;
+        color: HighlightText;
+    }
+
+    .icon-button:disabled {
+        color: GrayText;
+        opacity: 1;
+    }
+}

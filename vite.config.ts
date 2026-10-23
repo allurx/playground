@@ -9,6 +9,7 @@ import base from "@allurx/js-config/vite";
 export default mergeConfig(
     base,
     defineConfig({
+        build: { outDir: "dist/web" },
         preview: {
             host: "0.0.0.0",
             port: 4173,

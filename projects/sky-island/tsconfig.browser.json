@@ -1,0 +1,7 @@
+{
+    "extends": "@allurx/js-config/tsconfig/browser",
+    "compilerOptions": {
+        "tsBuildInfoFile": "../../node_modules/.cache/typescript/sky-island.browser.tsbuildinfo"
+    },
+    "include": ["src/**/*.ts"]
+}

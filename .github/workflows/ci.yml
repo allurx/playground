@@ -24,6 +24,6 @@ jobs:
     site:
         uses: allurx/allurx-build/.github/workflows/cloudflare-static-site.yml@f3cd85d5d435fb3093ad3c027f6788923aa802e7 # workflows-v2.0.0
         with:
-            asset-directory: dist/
+            asset-directory: dist/web/
             production-url: https://play.allurx.io
         secrets: inherit

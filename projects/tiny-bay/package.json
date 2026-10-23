@@ -6,7 +6,11 @@
     "license": "Apache-2.0",
     "scripts": {
         "dev": "npm --prefix ../.. run dev -- --open /tiny-bay/",
-        "build": "node scripts/build.mjs",
-        "check:syntax": "node --check scripts/build.mjs && node --check engine.js && node --check app.js"
+        "build": "vite build",
+        "build:portable": "vite build --mode portable",
+        "type-check": "tsc -b --noEmit"
+    },
+    "devDependencies": {
+        "@webgpu/types": "0.1.74"
     }
 }
